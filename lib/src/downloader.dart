@@ -30,6 +30,8 @@ class DownloadManager {
     }
     if (dio == null) {
       dio = Dio();
+    } else {
+      dio = dio;
     }
     return _dm;
   }
