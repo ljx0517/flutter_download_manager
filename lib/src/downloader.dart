@@ -10,7 +10,7 @@ import 'package:flutter_download_manager/flutter_download_manager.dart';
 class DownloadManager {
   final Map<String, DownloadTask> _cache = <String, DownloadTask>{};
   final Queue<DownloadRequest> _queue = Queue();
-  var dio = Dio();
+  // var dio = Dio();
   static const partialExtension = ".partial";
   static const tempExtension = ".temp";
 
@@ -18,14 +18,18 @@ class DownloadManager {
 
   int maxConcurrentTasks = 2;
   int runningTasks = 0;
+  late Dio dio;
 
   static final DownloadManager _dm = new DownloadManager._internal();
 
   DownloadManager._internal();
 
-  factory DownloadManager({int? maxConcurrentTasks}) {
+  factory DownloadManager({int? maxConcurrentTasks, dio}) {
     if (maxConcurrentTasks != null) {
       _dm.maxConcurrentTasks = maxConcurrentTasks;
+    }
+    if (dio == null) {
+      dio = Dio();
     }
     return _dm;
   }
@@ -156,11 +160,11 @@ class DownloadManager {
           ? savedDir + Platform.pathSeparator + getFileNameFromUrl(url)
           : savedDir;
 
-      return addDownloadRequest(DownloadRequest(url, downloadFilename));
+      return _addDownloadRequest(DownloadRequest(url, downloadFilename));
     }
   }
 
-  Future<DownloadTask> addDownloadRequest(
+  Future<DownloadTask> _addDownloadRequest(
     DownloadRequest downloadRequest,
   ) async {
     if (_cache[downloadRequest.url] != null) {
