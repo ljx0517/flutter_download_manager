@@ -29,9 +29,9 @@ class DownloadManager {
       _dm.maxConcurrentTasks = maxConcurrentTasks;
     }
     if (dio == null) {
-      dio = Dio();
+      _dm.dio = Dio();
     } else {
-      dio = dio;
+      _dm.dio = dio;
     }
     return _dm;
   }
