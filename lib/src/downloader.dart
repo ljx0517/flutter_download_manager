@@ -156,11 +156,11 @@ class DownloadManager {
           ? savedDir + Platform.pathSeparator + getFileNameFromUrl(url)
           : savedDir;
 
-      return _addDownloadRequest(DownloadRequest(url, downloadFilename));
+      return addDownloadRequest(DownloadRequest(url, downloadFilename));
     }
   }
 
-  Future<DownloadTask> _addDownloadRequest(
+  Future<DownloadTask> addDownloadRequest(
     DownloadRequest downloadRequest,
   ) async {
     if (_cache[downloadRequest.url] != null) {
